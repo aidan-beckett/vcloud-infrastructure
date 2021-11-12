@@ -25,7 +25,7 @@ resource "vcd_org_vdc" "cust-vcd-test" {
     }
 
     storage_profile {
-        name = "test-storage-policy"
+        name = "*"
         enabled = true
         limit = 0
         default = true
