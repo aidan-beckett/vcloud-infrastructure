@@ -8,7 +8,7 @@ terraform {
 }
 
 resource "vcd_org_vdc" "cust-vcd-test" {
-    name = "test vcd"
+    name = "test vcd update"
     allocation_model = "Flex"
     description = "Terraform Template Spike"
     provider_vdc_name = "LDS-AZ1"
