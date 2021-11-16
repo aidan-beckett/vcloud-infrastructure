@@ -16,7 +16,7 @@ resource "vcd_org_vdc" "cust-vcd-test" {
 
     compute_capacity {
         cpu {
-            allocated = 1024
+            allocated = 1000
         }
 
         memory {

@@ -5,6 +5,12 @@ terraform {
       version = "~> 3.4.0"
     }
   }
+
+  backend "s3" {
+    bucket = "vcd-tenancies"
+    key    = "{accountId}/tenancy.tfstate"
+    region = "eu-west-2"
+  }
 }
 
 variable "vcdHost" {
