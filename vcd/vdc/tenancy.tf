@@ -8,7 +8,7 @@ terraform {
 
   backend "s3" {
     bucket = "vcd-tenancies"
-    key    = "{accountId}/tenancy.tfstate"
+    key    = "{var.accountId}/tenancy.tfstate"
     region = "eu-west-2"
   }
 }
