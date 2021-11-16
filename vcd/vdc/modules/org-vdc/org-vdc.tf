@@ -38,6 +38,7 @@ resource "vcd_org_vdc" "cust-vcd-test" {
     }
 
   elasticity               = true
+  include_vm_memory_overhead = true
   enabled                  = true
   enable_thin_provisioning = true
   enable_fast_provisioning = false
