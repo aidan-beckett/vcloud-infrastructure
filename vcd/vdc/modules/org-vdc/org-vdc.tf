@@ -37,6 +37,7 @@ resource "vcd_org_vdc" "cust-vcd-test" {
         version = "v1"
     }
 
+  elasticity               = true
   enabled                  = true
   enable_thin_provisioning = true
   enable_fast_provisioning = false
