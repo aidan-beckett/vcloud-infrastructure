@@ -1,26 +1,23 @@
-variable "subnetGateway" {
-  type = string
+terraform {
+  required_providers {
+    nsxt = {
+      source = "vmware/nsxt"
+      version = "~> 3.2.5"
+    }
+  }
 }
 
-variable "subnetRange" {
-  type = string
-}
-
-variable "transportZone" {
-  type = string
-}
-
-data "nsxt_policy_transport_zone" "TZ" {
-  display_name = var.transportZone
+resource "nsxt_policy_vlan_segment" "tf-test-man" {
+  display_name        = "TF-TEST-MAN"
+  description         = "Terraform provisioned VLAN Segment MAN"
+  transport_zone_path = "/infra/sites/default/enforcement-points/default/transport-zones/2ab7b77f-c4d4-483e-9686-09b0ecd99ba3"
+  vlan_ids = ["1550"]
 }
 
 
-/*==============
-Create segments
-===============*/
-
-resource "nsxt_policy_fixed_segment" "dev-test-segment" {
-  display_name        = "Dev Test Segment"
-  description         = "Terraform provisioned Dev Test Segment"
-  connectivity_path = nsxt_policy_tier1_gateway.mygateway.path
+resource "nsxt_policy_vlan_segment" "tf-test-lds" {
+  display_name        = "TF-TEST-LDS"
+  description         = "Terraform provisioned VLAN Segment LDS"
+  transport_zone_path = "/infra/sites/default/enforcement-points/default/transport-zones/0b85d17b-4160-4083-b548-1d596b62b5ec"
+  vlan_ids = ["1750"]
 }
