@@ -1,38 +1,24 @@
-data "nsxt_policy_tier0_gateway" "tier0_gw" {
-  display_name = "gw1"
-}
-
-data "nsxt_policy_ipv6_ndra_profile" "slaac" {
-  display_name = "slaac"
-}
-
 /*=====================
-Create Tier 0 VRF Gateways Interfaces
+Create Tier 0 VRF Gateway Interfaces
 https://registry.terraform.io/providers/vmware/nsxt/latest/docs/resources/policy_tier0_gateway_interface
 =======================*/
 
-resource "nsxt_policy_tier0_gateway_interface" "tier0_vrf_if_01" {
-  display_name   = "Tier0-vrf-if-01"
-  description    = "Tier 0 VRF Gateways Interface"
+resource "nsxt_policy_tier0_gateway_interface" "tf-man-int" {
+  display_name   = "TF-TEST-MAN-INT"
   type           = "EXTERNAL"
-  edge_node_path = data.nsxt_policy_edge_node.edge_node_1.path
-  gateway_path   = nsxt_policy_tier0_gateway.tier0_gw.path
-  segment_path   = nsxt_policy_vlan_segment.vrf_trunk_1.path
-  access_vlan_id = 112
-  subnets        = ["192.168.112.254/24"]
+  edge_node_path = "/infra/sites/default/enforcement-points/default/edge-clusters/28bc1328-1eb3-4078-8ed7-699b4b9c9ab9/edge-nodes/0"
+  gateway_path   = nsxt_policy_tier0_gateway.tier0-gw.path
+  segment_path   = nsxt_policy_vlan_segment.tf-test-man.path 
+  subnets        = ["172.31.160.5/31"]
   mtu            = 1500
-  depends_on = [nsxt_policy_tier0_gateway_interface.parent_uplink1]
 }
 
-resource "nsxt_policy_tier0_gateway_interface" "tier0_vrf_if_02" {
-  display_name   = "Tier0-vrf-if-02"
-  description    = "Tier 0 VRF Gateways Interface"
+resource "nsxt_policy_tier0_gateway_interface" "tf-lds-int" {
+  display_name   = "TF-TEST-LDS-INT"
   type           = "EXTERNAL"
-  edge_node_path = data.nsxt_policy_edge_node.edge_node_2.path
-  gateway_path   = nsxt_policy_tier0_gateway.tier0_gw.path
-  segment_path   = nsxt_policy_vlan_segment.vrf_trunk_2.path
-  access_vlan_id = 113
-  subnets        = ["192.168.113.254/24"]
+  edge_node_path = "/infra/sites/default/enforcement-points/default/edge-clusters/28bc1328-1eb3-4078-8ed7-699b4b9c9ab9/edge-nodes/1"
+  gateway_path   = nsxt_policy_tier0_gateway.tier0-gw.path
+  segment_path   = nsxt_policy_vlan_segment.tf-test-lds.path
+  subnets        = ["172.31.160.7/31"]
   mtu            = 1500
-  depends_on = [nsxt_policy_tier0_gateway_interface.parent_uplink1]
 }
