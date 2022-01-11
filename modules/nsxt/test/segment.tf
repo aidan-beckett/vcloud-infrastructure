@@ -7,7 +7,7 @@ terraform {
   }
 }
 
-resource "nsxt_policy_vlan_segment" "tf-test-man" {
+resource "nsxt_policy_vlan_segment" "tf-man-seg" {
   display_name        = "TF-TEST-MAN"
   description         = "Terraform provisioned VLAN Segment MAN"
   transport_zone_path = "/infra/sites/default/enforcement-points/default/transport-zones/2ab7b77f-c4d4-483e-9686-09b0ecd99ba3"
