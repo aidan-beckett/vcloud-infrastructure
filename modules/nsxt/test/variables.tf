@@ -77,3 +77,9 @@ variable "address_family" {
   variable "leeds_interface_subnet" {
     type  = list(string)
   }
+
+  ## NSX-T Tier-0 Gateway Variables
+
+  variable "t0_vrf_gateway_name" {
+    type  = string
+  }
