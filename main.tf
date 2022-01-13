@@ -14,13 +14,13 @@ terraform {
   }
 }                        
 
-# provider "vcd" {
-#   user                 = var.vcdUser
-#   password             = var.vcdPassword
-#   auth_type            = "integrated"
-#   org                  = var.defaultOrg
-#   url                  = var.vcdHost
-# }
+provider "vcd" {
+  user       = var.vcd_user
+  password   = var.vcd_password
+  auth_type  = "integrated"
+  org        = var.default_org
+  url        = var.vcd_host
+}
 
 provider "nsxt" {
   host                  = var.nsx_manager
@@ -33,16 +33,53 @@ provider "nsxt" {
   retry_on_status_codes = [429]
 }
 
-# module "vdc" {
-#     source = "./modules/vclouddirector"
-# }
+module "vdc" {
+    source = "./modules/vclouddirector"
+}
 
 module "nsxt" {
-    source = "./modules/nsxt/test"
-    bgp_neighbour_name_man =var.bgp_neighbour_name_man
-    bgp_neighbour_name_lds = var.bgp_neighbour_name_lds
-    bgp_neighbour_address_man = var.bgp_neighbour_address_man
-    bgp_neighbour_address_lds = var.bgp_neighbour_address_lds
-    remote_as_num = var.remote_as_num
-    address_family = var.address_family
+  source = "./modules/nsxt"
+
+  man_bgp_neighbour_name    = var.man_bgp_neighbour_name
+  lds_bgp_neighbour_name    = var.lds_bgp_neighbour_name
+  man_bgp_neighbour_address = var.man_bgp_neighbour_address
+  lds_bgp_neighbour_address = var.lds_bgp_neighbour_address
+  remote_as_num             = var.remote_as_num
+  address_family            = var.address_family
+
+  man_segement_display_name = var.man_segement_display_name
+  lds_segment_display_name  = var.lds_segment_display_name
+  overlay_segment_name      = var.overlay_segment_name
+  man_segement_vlan_ids     = var.man_segement_vlan_ids
+  lds_segement_vlan_ids     = var.lds_segement_vlan_ids
+  overlay_segment_subnet_address = var.overlay_segment_subnet_address
+
+  man_t0_interface_name     = var.man_t0_interface_name
+  lds_t0_interface_name     = var.lds_t0_interface_name
+  man_t0_interface_subnet   = var.man_t0_interface_subnet
+  lds_t0_interface_subnet   = var.lds_t0_interface_subnet
+
+  t0_vrf_gateway_name       = var.t0_vrf_gateway_name
+
+  t1_vrf_gateway_name       = var.t1_vrf_gateway_name
+}
+
+module "vdc" {
+  depends_on  = "nsxt"
+  source = "./modules/vclouddirector"
+
+  network_name            = var.network_name
+  provider_vdc_name       = var.provider_vdc_name
+  provider_network_pool   = var.provider_network_pool
+  cpu_allocation          = var.cpu_allocation
+  ram_allocation          = var.ram_allocation
+
+  vdc_name                = var.vdc_name
+  overlay_segment_name    = var.overlay_segment_name
+  overlay_segment_subnet_address = var.overlay_segment_subnet_address
+  start_address           = var.start_address
+  end_address             = var.end_address
+  primary_dns_ip          = var.primary_dns_ip
+  secondary_dns_ip        = var.secondary_dns_ip
+
 }

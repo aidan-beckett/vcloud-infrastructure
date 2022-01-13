@@ -59,6 +59,7 @@ variable "address_family" {
   variable "overlay_segment_subnet_address" {
     type  = string
   }
+  
 ##
 
 ## NSX-T Tier-0 Gateway Interface Variables

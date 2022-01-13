@@ -1,18 +1,18 @@
 
-resource "vcd_org_vdc" "cust-vcd-test" {
-    name = "test vcd update"
+resource "vcd_org_vdc" "customer_vdc" {
+    name = var.vdc_name
     allocation_model = "Flex"
-    description = "Terraform Template Spike"
-    provider_vdc_name = "LDS-AZ1"
-    network_pool_name = "LDS-NETPOOL1"
+    description = "Terraform provisioned VDC"
+    provider_vdc_name = var.provider_vdc_name
+    network_pool_name = var.provider_network_pool
 
     compute_capacity {
         cpu {
-            allocated = 1000
+            allocated = var.cpu_allocation
         }
 
         memory {
-            allocated = 1024
+            allocated = var.ram_allocation
         }
     }
 
@@ -24,8 +24,8 @@ resource "vcd_org_vdc" "cust-vcd-test" {
     }
 
     metadata = {
-        role    = "Devs"
-        env     = "staging"
+        role    = "Terraform"
+        env     = "prod"
         version = "v1"
     }
 
