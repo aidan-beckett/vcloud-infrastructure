@@ -37,26 +37,43 @@ variable "address_family" {
 ## NSX-T Variables Segments
 
   variable "man_display_name" {
-    type = string
+    type  = string
   }
 
   variable "lds_display_name" {
-    type = string
+    type  = string
   }
 
   variable "overlay_segment_name" {
-    type = string
+    type  = string
   }
 
   variable "segement_man_vlan_ids" {
-    type = list(string)
+    type  = list(string)
   }
 
   variable "segement_lds_vlan_ids" {
-    type = list(string)
+    type  = list(string)
   }
 
   variable "segment_subnet_address" {
     type  = string
   }
 
+## NSX-T Tier-0 Gateway Interface Variables
+
+  variable "man_t0_interface_name" {
+    type  = string
+  }
+
+  variable "lds_t0_interface_name" {
+    type  = string
+  }
+
+  variable "manchester_interface_subnet" {
+    type  = list(string)
+  }
+
+  variable "leeds_interface_subnet" {
+    type  = list(string)
+  }

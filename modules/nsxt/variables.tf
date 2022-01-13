@@ -59,4 +59,3 @@ variable "address_family" {
   variable "segment_subnet_address" {
     type  = string
   }
-

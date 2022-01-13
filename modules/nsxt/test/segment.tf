@@ -1,14 +1,4 @@
-terraform {
-  required_providers {
-    nsxt = {
-      source = "vmware/nsxt"
-      version = "~> 3.2.5"
-    }
-  }
-}
-
-
-resource "nsxt_policy_vlan_segment" "tf-man-vlan-seg" {
+resource "nsxt_policy_vlan_segment" "tf_man_vlan_seg" {
   count               = var.man_display_name != "" ? 1 : 0 
   display_name        = var.man_display_name
   description         = "Terraform provisioned VLAN Segment Manchester"
@@ -16,7 +6,7 @@ resource "nsxt_policy_vlan_segment" "tf-man-vlan-seg" {
   vlan_ids = var.segement_man_vlan_ids;
 }
 
-resource "nsxt_policy_vlan_segment" "tf-lds-vlan-seg" {
+resource "nsxt_policy_vlan_segment" "tf_lds_vlan_seg" {
   count               = var.lds_display_name != "" ? 1 : 0 
   display_name        = var.lds_display_name
   description         = "Terraform provisioned VLAN Segment Leeds"
@@ -24,7 +14,7 @@ resource "nsxt_policy_vlan_segment" "tf-lds-vlan-seg" {
   vlan_ids = var.segement_lds_vlan_ids
 }
 
-resource "nsxt_policy_segment" "tf-overlay-seg" {
+resource "nsxt_policy_segment" "tf_overlay_seg" {
   display_name        = var.overlay_segment_name
   description         = "Terraform provisioned Overlay Segment"
   connectivity_path   = nsxt_policy_tier1_gateway.tier1_gw.path
