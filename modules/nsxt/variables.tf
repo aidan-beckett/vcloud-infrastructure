@@ -31,3 +31,32 @@ variable "address_family" {
   description = "Address family type. Must be one of L2VPN_EVPN, IPV4 or IPV6" 
   default = "IPV4"
 }
+
+##
+
+## NSX-T Variables Segments
+
+  variable "man_display_name" {
+    type = string
+  }
+
+  variable "lds_display_name" {
+    type = string
+  }
+
+  variable "overlay_segment_name" {
+    type = string
+  }
+
+  variable "segement_man_vlan_ids" {
+    type = list(string)
+  }
+
+  variable "segement_lds_vlan_ids" {
+    type = list(string)
+  }
+
+  variable "segment_subnet_address" {
+    type  = string
+  }
+
