@@ -59,6 +59,7 @@ variable "address_family" {
   variable "segment_subnet_address" {
     type  = string
   }
+##
 
 ## NSX-T Tier-0 Gateway Interface Variables
 
@@ -78,8 +79,15 @@ variable "address_family" {
     type  = list(string)
   }
 
-  ## NSX-T Tier-0 Gateway Variables
+##
+## NSX-T Tier-0 Gateway Variables
 
   variable "t0_vrf_gateway_name" {
+    type  = string
+  }
+
+##
+## NSX-T Tier-1 Gateway Variables
+  variable "t1_gateway_name" {
     type  = string
   }
