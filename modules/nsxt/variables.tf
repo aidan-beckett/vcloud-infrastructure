@@ -80,6 +80,7 @@ variable "address_family" {
   }
 
 ##
+
 ## NSX-T Tier-0 Gateway Variables
 
   variable "t0_vrf_gateway_name" {
@@ -87,7 +88,11 @@ variable "address_family" {
   }
 
 ##
+
 ## NSX-T Tier-1 Gateway Variables
-  variable "t1_gateway_name" {
+
+  variable "t1_vrf_gateway_name" {
     type  = string
   }
+
+##
