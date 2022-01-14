@@ -1,7 +1,7 @@
 
 resource "vcd_nsxt_network_imported" "nsxt_backed" {
   depends_on  = [vcd_org_vdc.customer_vdc]
-  org         = "Synextra"
+  org         = var.create_new_org? vcd_org.customer_org[0].name : var.org_name
   vdc         = vcd_org_vdc.customer_vdc.name
   name        = var.network_name
   description = "Terraform provisioned NSXT Network"

@@ -141,6 +141,22 @@ variable "address_family" {
 
 ##
 
+## VCD Customer Org Variables ##
+
+  variable "create_new_org" {
+    type  = string
+  }
+
+  variable "org_name" {
+    type  = string
+  }
+
+  variable "org_full_name" {
+    type  = string
+  }
+
+##
+
 ## VCD Customer VDC Variables ##
   variable "vdc_name" {
     type  = string

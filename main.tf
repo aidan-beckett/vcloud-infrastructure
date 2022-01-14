@@ -62,6 +62,10 @@ module "nsxt" {
 module "vdc" {
   source = "./modules/vclouddirector"
 
+  create_new_org          = var.create_new_org
+  org_name                = var.org_name
+  org_full_name           = var.org_full_name
+
   network_name            = var.network_name
   provider_vdc_name       = var.provider_vdc_name
   provider_network_pool   = var.provider_network_pool
