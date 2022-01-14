@@ -9,9 +9,7 @@ terraform {
       version = "~> 3.2.5"
     }
   }
-  
-  backend "s3" {
-  }
+
 }                        
 
 provider "vcd" {
@@ -20,6 +18,7 @@ provider "vcd" {
   auth_type  = "integrated"
   org        = var.default_org
   url        = var.vcd_host
+  allow_unverified_ssl = true
 }
 
 provider "nsxt" {
@@ -33,10 +32,6 @@ provider "nsxt" {
   retry_on_status_codes = [429]
 }
 
-module "vdc" {
-    source = "./modules/vclouddirector"
-}
-
 module "nsxt" {
   source = "./modules/nsxt"
 
@@ -47,11 +42,11 @@ module "nsxt" {
   remote_as_num             = var.remote_as_num
   address_family            = var.address_family
 
-  man_segement_display_name = var.man_segement_display_name
+  man_segment_display_name = var.man_segment_display_name
   lds_segment_display_name  = var.lds_segment_display_name
   overlay_segment_name      = var.overlay_segment_name
-  man_segement_vlan_ids     = var.man_segement_vlan_ids
-  lds_segement_vlan_ids     = var.lds_segement_vlan_ids
+  man_segment_vlan_ids     = var.man_segment_vlan_ids
+  lds_segment_vlan_ids     = var.lds_segment_vlan_ids
   overlay_segment_subnet_address = var.overlay_segment_subnet_address
 
   man_t0_interface_name     = var.man_t0_interface_name
@@ -65,7 +60,6 @@ module "nsxt" {
 }
 
 module "vdc" {
-  depends_on  = "nsxt"
   source = "./modules/vclouddirector"
 
   network_name            = var.network_name

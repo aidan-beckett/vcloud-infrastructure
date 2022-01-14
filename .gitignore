@@ -2,3 +2,6 @@
 *.tar
 *.tfvars
 *.tfvars.json
+*.terraform.lock.hcl
+*.tfstate*
+.terraform*

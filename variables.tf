@@ -80,7 +80,7 @@ variable "address_family" {
 
 ## NSX-T Variables Segments ##
 
-  variable "man_segement_display_name" {
+  variable "man_segment_display_name" {
     type  = string
   }
 
@@ -92,11 +92,11 @@ variable "address_family" {
     type  = string
   }
 
-  variable "man_segement_vlan_ids" {
+  variable "man_segment_vlan_ids" {
     type  = list(string)
   }
 
-  variable "lds_segement_vlan_ids" {
+  variable "lds_segment_vlan_ids" {
     type  = list(string)
   }
 
