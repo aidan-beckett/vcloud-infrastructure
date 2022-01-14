@@ -5,7 +5,9 @@ resource "vcd_org_vdc" "customer_vdc" {
     description = "Terraform provisioned VDC"
     provider_vdc_name = var.provider_vdc_name
     network_pool_name = var.provider_network_pool
-
+    network_quota     = 1
+    org               = "Synextra"
+    
     compute_capacity {
         cpu {
             allocated = var.cpu_allocation
