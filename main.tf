@@ -80,4 +80,5 @@ module "vdc" {
   primary_dns_ip          = var.primary_dns_ip
   secondary_dns_ip        = var.secondary_dns_ip
 
+  vm_configs              = var.vm_configs
 }
