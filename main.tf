@@ -42,11 +42,11 @@ module "nsxt" {
   remote_as_num             = var.remote_as_num
   address_family            = var.address_family
 
-  man_segment_display_name = var.man_segment_display_name
+  man_segment_display_name  = var.man_segment_display_name
   lds_segment_display_name  = var.lds_segment_display_name
   overlay_segment_name      = var.overlay_segment_name
-  man_segment_vlan_ids     = var.man_segment_vlan_ids
-  lds_segment_vlan_ids     = var.lds_segment_vlan_ids
+  man_segment_vlan_ids      = var.man_segment_vlan_ids
+  lds_segment_vlan_ids      = var.lds_segment_vlan_ids
   overlay_segment_subnet_address = var.overlay_segment_subnet_address
 
   man_t0_interface_name     = var.man_t0_interface_name
@@ -62,23 +62,23 @@ module "nsxt" {
 module "vdc" {
   source = "./modules/vclouddirector"
 
-  create_new_org          = var.create_new_org
-  org_name                = var.org_name
-  org_full_name           = var.org_full_name
+  create_new_org            = var.create_new_org
+  org_name                  = var.org_name
+  org_full_name             = var.org_full_name
 
-  network_name            = var.network_name
-  provider_vdc_name       = var.provider_vdc_name
-  provider_network_pool   = var.provider_network_pool
-  cpu_allocation          = var.cpu_allocation
-  ram_allocation          = var.ram_allocation
+  network_name              = var.network_name
+  provider_vdc_name         = var.provider_vdc_name
+  provider_network_pool     = var.provider_network_pool
+  cpu_allocation            = var.cpu_allocation
+  ram_allocation            = var.ram_allocation
 
-  vdc_name                = var.vdc_name
-  overlay_segment_name    = var.overlay_segment_name
+  vdc_name                  = var.vdc_name
+  overlay_segment_name      = var.overlay_segment_name
   overlay_segment_subnet_address = var.overlay_segment_subnet_address
-  start_address           = var.start_address
-  end_address             = var.end_address
-  primary_dns_ip          = var.primary_dns_ip
-  secondary_dns_ip        = var.secondary_dns_ip
+  start_address             = var.start_address
+  end_address               = var.end_address
+  primary_dns_ip            = var.primary_dns_ip
+  secondary_dns_ip          = var.secondary_dns_ip
 
-  vm_configs              = var.vm_configs
+  vm_configs                = var.vm_configs
 }
