@@ -5,7 +5,6 @@ https://registry.terraform.io/providers/vmware/nsxt/latest/docs/resources/policy
 
 resource "nsxt_policy_tier0_gateway" "tier0_gw" {
   display_name             = var.t0_vrf_gateway_name
-  description              = "Terraform provisioned Tier 0 Gateway"
   failover_mode            = "NON_PREEMPTIVE"
   default_rule_logging     = false
   enable_firewall          = true
