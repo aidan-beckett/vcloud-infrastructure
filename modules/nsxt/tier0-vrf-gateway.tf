@@ -5,17 +5,17 @@ https://registry.terraform.io/providers/vmware/nsxt/latest/docs/resources/policy
 
 resource "nsxt_policy_tier0_gateway" "tier0_gw" {
   display_name             = var.t0_vrf_gateway_name
-  failover_mode            = "NON_PREEMPTIVE"
-  default_rule_logging     = false
-  enable_firewall          = true
-  ha_mode                  = "ACTIVE_ACTIVE"
-  edge_cluster_path        = "/infra/sites/default/enforcement-points/default/edge-clusters/28bc1328-1eb3-4078-8ed7-699b4b9c9ab9"
+  failover_mode            = var.t0_vrf_gateway_failover_mode
+  default_rule_logging     = var.t0_vrf_gateway_default_rule_logging
+  enable_firewall          = var.t0_vrf_gateway_enable_firewall
+  ha_mode                  = var.t0_vrf_gateway_ha_mode
+  edge_cluster_path        = var.t0_vrf_gateway_edge_cluster_path
 
   bgp_config {
-    ecmp = true
+    ecmp = var.t0_vrf_gateway_bpg_config.ecmp
   }
 
   vrf_config {
-    gateway_path = "/infra/tier-0s/T0-WW"
+    gateway_path = var.t0_vrf_gateway_vrf_config.gateway_path
   }
 }
