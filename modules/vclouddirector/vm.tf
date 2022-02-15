@@ -1,4 +1,5 @@
 resource "vcd_vm" "vms" {
+  depends_on    = [vcd_nsxt_network_imported.nsxt_backed]
   for_each      = {for vm_config in var.vm_configs: vm_config.vm_name => vm_config}
 
   org           = var.create_new_org? vcd_org.customer_org[0].name : var.org_name
