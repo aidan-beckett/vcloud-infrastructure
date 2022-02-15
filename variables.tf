@@ -248,7 +248,7 @@
 
   variable "t1_vrf_gateway_pool_allocation" {
     type  = string
-    default = "PREEMPTIVE"
+    default = "ROUTING"
   }
 
   variable "t1_vrf_gateway_route_advertisement_types" {
