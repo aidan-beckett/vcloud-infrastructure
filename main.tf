@@ -9,8 +9,12 @@ terraform {
       version = "~> 3.2.5"
     }
   }
-
+  
+  backend "s3" {
+    
+  }
 }                        
+
 
 provider "vcd" {
   user       = var.vcd_user
