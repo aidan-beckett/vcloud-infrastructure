@@ -1,3 +1,15 @@
+locals {
+  vm_disk_map = flatten([
+    for vm_config, vm_config in var.vm_configs : [
+      for disk_config, disk_config in vm_config.disk_configs: 
+      {
+        "vm_name" = vm_config.vm_name,
+        "vm_disk_config" = disk_config
+      } 
+    ]
+  ])
+}
+
 resource "vcd_vm" "vms" {
   depends_on    = [vcd_nsxt_network_imported.nsxt_backed]
   for_each      = {for vm_config in var.vm_configs: vm_config.vm_name => vm_config}
@@ -21,14 +33,21 @@ resource "vcd_vm" "vms" {
     ip          = each.value.vm_ip
 
   }
+}
 
-  dynamic "disk" {
-    for_each      = {for disk_config in each.value.disk_configs: disk_config.disk_name => disk_config}
-    content {
-      name        = disk.value.disk_name
-      bus_number  = disk.value.bus_number
-      unit_number = disk.value.unit_number
-    }
+resource "vcd_vm_internal_disk" "disks" {
+  depends_on = [vcd_vm.vms]
+  for_each   = {for config in local.vm_disk_map: "${config.vm_name}.${config.vm_disk_config.bus_number}" => config}
 
-  }
+  org           = var.create_new_org? vcd_org.customer_org[0].name : var.org_name
+  vdc           = vcd_org_vdc.customer_vdc.name
+
+  allow_vm_reboot = true
+
+  vapp_name = each.value.vm_name
+  vm_name   = each.value.vm_name
+  bus_type  = each.value.vm_disk_config.bus_type
+  size_in_mb = each.value.vm_disk_config.disk_size
+  bus_number = each.value.vm_disk_config.bus_number
+  unit_number = each.value.vm_disk_config.unit_number
 }
