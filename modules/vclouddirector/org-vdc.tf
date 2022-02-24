@@ -32,7 +32,7 @@ resource "vcd_org_vdc" "customer_vdc" {
     }
 
   elasticity               = true
-  include_vm_memory_overhead = true
+  include_vm_memory_overhead = false
   enabled                  = true
   enable_thin_provisioning = true
   enable_fast_provisioning = false
