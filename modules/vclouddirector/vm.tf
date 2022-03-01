@@ -1,14 +1,4 @@
-locals {
-  vm_disk_map = flatten([
-    for vm_config, vm_config in var.vm_configs : [
-      for disk_config, disk_config in vm_config.disk_configs: 
-      {
-        "vm_name" = vm_config.vm_name,
-        "vm_disk_config" = disk_config
-      } 
-    ]
-  ])
-}
+
 
 resource "vcd_vm" "vms" {
   depends_on    = [vcd_nsxt_network_imported.nsxt_backed]
@@ -29,10 +19,20 @@ resource "vcd_vm" "vms" {
 
     name        = var.network_name
     type        = "org"
-    ip_allocation_mode = "MANUAL"
-    ip          = each.value.vm_ip
-
+    ip_allocation_mode = "DHCP"
   }
+}
+
+locals {
+  vm_disk_map = flatten([
+    for vm_config, vm_config in var.vm_configs : [
+      for disk_config, disk_config in vm_config.disk_configs: 
+      {
+        "vm_name" = vm_config.vm_name,
+        "vm_disk_config" = disk_config
+      } 
+    ]
+  ])
 }
 
 resource "vcd_vm_internal_disk" "disks" {
@@ -44,7 +44,7 @@ resource "vcd_vm_internal_disk" "disks" {
 
   allow_vm_reboot = true
 
-  vapp_name = each.value.vm_name
+  vapp_name = vcd_vm.vms[each.value.vm_name].vapp_name
   vm_name   = each.value.vm_name
   bus_type  = each.value.vm_disk_config.bus_type
   size_in_mb = each.value.vm_disk_config.disk_size

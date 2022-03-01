@@ -317,6 +317,7 @@
 
   variable "secondary_dns_ip" {
     type  = string
+    nullable  = true
   }
 
 ##

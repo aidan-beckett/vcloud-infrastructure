@@ -10,9 +10,9 @@ terraform {
     }
   }
 
-  backend "s3" {
+  //backend "s3" {
     
-  }
+  //}
 }                        
 
 
@@ -65,7 +65,6 @@ module "nsxt" {
 
 module "vdc" {
   source = "./modules/vclouddirector"
-
   create_new_org            = var.create_new_org
   org_name                  = var.org_name
   org_full_name             = var.org_full_name
