@@ -71,20 +71,13 @@
 
 ## VCD VM Variables ##
 
-  variable "vm_configs" {
+  variable "vms_config" {
     type  = list(object({
       vm_name       = string
       template_name = string
       cpus          = number
       memory        = number
       vm_ip         = string
-      disk_configs  = list(object({
-        bus_type      = string
-        disk_size     = number
-        disk_name     = string
-        bus_number    = number
-        unit_number   = number
-      }))  
     }))
   }
 

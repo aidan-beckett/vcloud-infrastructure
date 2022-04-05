@@ -2,7 +2,7 @@
 
 resource "vcd_vm" "vms" {
   depends_on    = [vcd_nsxt_network_imported.nsxt_backed]
-  for_each      = {for vm_config in var.vm_configs: vm_config.vm_name => vm_config}
+  for_each      = {for vm_config in var.vms_config: vm_config.vm_name => vm_config}
 
   org           = var.create_new_org? vcd_org.customer_org[0].name : var.org_name
   vdc           = vcd_org_vdc.customer_vdc.name
@@ -23,7 +23,7 @@ resource "vcd_vm" "vms" {
   }
 }
 
-locals {
+/*locals {
   vm_disk_map = flatten([
     for vm_config, vm_config in var.vm_configs : [
       for disk_config, disk_config in vm_config.disk_configs: 
@@ -50,4 +50,4 @@ resource "vcd_vm_internal_disk" "disks" {
   size_in_mb = each.value.vm_disk_config.disk_size
   bus_number = each.value.vm_disk_config.bus_number
   unit_number = each.value.vm_disk_config.unit_number
-}
+}*/

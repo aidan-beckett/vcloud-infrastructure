@@ -37,51 +37,61 @@ provider "nsxt" {
 }
 
 module "nsxt" {
+  for_each = {for nsxt_config in var.nsxt_config_array: nsxt_config.t0_gateway.gateway_name => nsxt_config}
+
   source = "./modules/nsxt"
 
-  man_bgp_neighbour_name    = var.man_bgp_neighbour_name
-  lds_bgp_neighbour_name    = var.lds_bgp_neighbour_name
-  man_bgp_neighbour_address = var.man_bgp_neighbour_address
-  lds_bgp_neighbour_address = var.lds_bgp_neighbour_address
-  remote_as_num             = var.remote_as_num
-  address_family            = var.address_family
+  bgp_neighbour_name        = each.value.bgp.bgp_neighbour_name
+  bgp_neighbour_address     = each.value.bgp.bgp_neighbour_address
+  remote_as_num             = each.value.bgp.remote_as_num
+  address_family            = each.value.bgp.address_family
 
-  man_segment_display_name  = var.man_segment_display_name
-  lds_segment_display_name  = var.lds_segment_display_name
-  overlay_segment_name      = var.overlay_segment_name
-  man_segment_vlan_ids      = var.man_segment_vlan_ids
-  lds_segment_vlan_ids      = var.lds_segment_vlan_ids
-  overlay_segment_subnet_address = var.overlay_segment_subnet_address
+  segment_display_name      = each.value.segment.segment_display_name
+  overlay_segment_name      = each.value.segment.overlay_segment_name
+  vlan_ids                  = each.value.segment.vlan_ids
+  transport_zone_path       = each.value.segment.transport_zone_path
+  overlay_segment_subnet_address = each.value.segment.overlay_segment_subnet_address
+  overlay_segment_transport_zone_path = each.value.segment.overlay_segment_transport_zone_path
 
-  man_t0_interface_name     = var.man_t0_interface_name
-  lds_t0_interface_name     = var.lds_t0_interface_name
-  man_t0_interface_subnet   = var.man_t0_interface_subnet
-  lds_t0_interface_subnet   = var.lds_t0_interface_subnet
+  t0_interface_name         = each.value.t0_gateway_interface.t0_interface_name
+  t0_interface_subnet       = [each.value.t0_gateway_interface.t0_interface_subnet]
+  t0_interface_type         = each.value.t0_gateway_interface.interface_type
+  t0_interface_edge_node_path = each.value.t0_gateway_interface.edge_node_path
 
-  t0_vrf_gateway_name       = var.t0_vrf_gateway_name
+  t0_vrf_gateway_name       = each.value.t0_gateway.gateway_name
+  t0_vrf_gateway_failover_mode = each.value.t0_gateway.failover_mode
+  t0_vrf_gateway_path       = each.value.t0_gateway.gateway_path
+  t0_vrf_gateway_edge_cluster_path = each.value.t0_gateway.edge_cluster_path
 
-  t1_vrf_gateway_name       = var.t1_vrf_gateway_name
+
+  t1_vrf_gateway_name       = each.value.t1_gateway.gateway_name
+  t1_vrf_gateway_edge_cluster_path = each.value.t1_gateway.edge_cluster_path
+  t1_vrf_gateway_failover_mode = each.value.t1_gateway.failover_mode
+  t1_vrf_gateway_pool_allocation = each.value.t1_gateway.pool_allocation
+  t1_vrf_gateway_route_advertisement_types = [each.value.t1_gateway.route_advertisement_types]
 }
 
 module "vdc" {
+  for_each = { for vcd_config in var.vcd_config_array: vcd_config.org.org_name => vcd_config }
   source = "./modules/vclouddirector"
-  create_new_org            = var.create_new_org
-  org_name                  = var.org_name
-  org_full_name             = var.org_full_name
 
-  network_name              = var.network_name
-  provider_vdc_name         = var.provider_vdc_name
-  provider_network_pool     = var.provider_network_pool
-  cpu_allocation            = var.cpu_allocation
-  ram_allocation            = var.ram_allocation
+  create_new_org            = each.value.org.create_new_org
+  org_name                  = each.value.org.org_name
+  org_full_name             = each.value.org.org_full_name
 
-  vdc_name                  = var.vdc_name
-  overlay_segment_name      = var.overlay_segment_name
-  overlay_segment_subnet_address = var.overlay_segment_subnet_address
-  start_address             = var.start_address
-  end_address               = var.end_address
-  primary_dns_ip            = var.primary_dns_ip
-  secondary_dns_ip          = var.secondary_dns_ip
+  vdc_name                  = each.value.customer_vdc.vdc_name
+  provider_vdc_name         = each.value.customer_vdc.provider_vdc_name
+  provider_network_pool     = each.value.customer_vdc.provider_network_pool
+  cpu_allocation            = each.value.customer_vdc.cpu_allocation
+  ram_allocation            = each.value.customer_vdc.ram_allocation
 
-  vm_configs                = var.vm_configs
+  network_name              = each.value.network.network_name
+  overlay_segment_name      = each.value.network.overlay_segment_name
+  overlay_segment_subnet_address = each.value.network.overlay_segment_subnet_address
+  start_address             = each.value.network.start_address
+  end_address               = each.value.network.end_address
+  primary_dns_ip            = each.value.network.primary_dns_ip
+  secondary_dns_ip          = each.value.network.secondary_dns_ip
+
+  vms_config                = each.value.vms_config
 }

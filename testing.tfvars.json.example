@@ -1,0 +1,77 @@
+{
+	"vcd_user": "dev.agent",
+	"vcd_password": "ap1fgOGKe1pz",
+	"default_org": "System",
+	"vcd_host": "https://vcloud.smartstac.co.uk/api",
+
+	"nsx_user": "abeckett.admin@smartstac.co.uk",
+	"nsx_password": "cucklord69*",
+	"nsx_manager": "https://sngx-nsxmgr-c2.smartstac.co.uk",
+
+  "nsxt_config_array":[{
+    "bgp":{
+      "bgp_neighbour_name": "tf-man-bgp-neighbor",
+      "bgp_neighbour_address": "172.31.160.4",
+      "remote_as_num": "59778",
+      "address_family": "IPV4"
+    },
+    "segment":{
+      "segment_display_name": "TF-TEST-MAN",
+      "overlay_segment_name": "TF-TEST-OVERLAY",
+      "vlan_ids": ["1550"],
+      "overlay_segment_subnet_address": "172.16.255.1/24",
+      "transport_zone_path": "/infra/sites/default/enforcement-points/default/transport-zones/2ab7b77f-c4d4-483e-9686-09b0ecd99ba3",
+      "overlay_segment_transport_zone_path": "/infra/sites/default/enforcement-points/default/transport-zones/839090f3-a229-4753-9a20-94c51d6da2bb"
+    },
+    "t0_gateway_interface": {
+      "t0_interface_name": "TF-TEST-MAN-INT",
+      "t0_interface_subnet": "172.31.160.5/31",
+      "interface_type": "EXTERNAL",
+      "edge_node_path": "/infra/sites/default/enforcement-points/default/edge-clusters/28bc1328-1eb3-4078-8ed7-699b4b9c9ab9/edge-nodes/0"
+    },
+    "t0_gateway":{
+      "gateway_name": "V800040:TF-TEST",
+      "failover_mode": "NON_PREEMPTIVE",
+      "edge_cluster_path": "/infra/sites/default/enforcement-points/default/edge-clusters/28bc1328-1eb3-4078-8ed7-699b4b9c9ab9",
+      "gateway_path": "/infra/tier-0s/T0-WW"
+    },
+
+    "t1_gateway": {
+      "gateway_name": "V800040:TF-TEST-TIER1",
+      "edge_cluster_path": "/infra/sites/default/enforcement-points/default/edge-clusters/28bc1328-1eb3-4078-8ed7-699b4b9c9ab9",
+      "failover_mode": "PREEMPTIVE",
+      "pool_allocation": "ROUTING",
+      "route_advertisement_types": "TIER1_CONNECTED"
+    }
+  }],
+  "vcd_config_array": [{
+    "org":{
+      "create_new_org": true,
+      "org_name": "devtest",
+      "org_full_name": "Devs Test"
+    },
+    "customer_vdc":{
+      "vdc_name": "test vcd",
+      "provider_vdc_name": "MAN-AZ1",
+      "provider_network_pool": "SNGX-OVERLAY-NETPOOL",
+      "cpu_allocation": 4000,
+      "ram_allocation": 8192
+    },
+    "network":{
+      "network_name": "test network",
+      "start_address": "172.16.255.50",
+      "end_address": "172.16.255.51",
+      "primary_dns_ip": "10.0.100.50",
+      "overlay_segment_name": "TF-TEST-OVERLAY",
+      "overlay_segment_subnet_address": "172.16.255.1/24",
+      "secondary_dns_ip": ""
+    },
+    "vms_config": [{
+      "vm_name": "dev-test-vm",
+      "template_name": "vCD-Template-SRV2019STD",
+      "cpus": 3,
+      "memory": 4096,
+      "vm_ip": "172.16.255.50"
+    }]
+  }]
+}
