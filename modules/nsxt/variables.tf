@@ -10,6 +10,18 @@ variable "bgp_neighbour_address" {
   description = "Neighbor IP Address"
 }
 
+variable "backup_bgp_neighbour_name" {
+  type  = string
+  description = "BGP neighbour name"
+  default = ""
+}
+
+variable "backup_bgp_neighbour_address" {
+  type  = string
+  description = "Neighbor IP Address"
+  default = ""
+}
+
 variable "remote_as_num" {
   type  = number
   description = "ASN of the neighbor in ASPLAIN/ASDOT Format"
@@ -62,6 +74,16 @@ variable "bfd_config_multiple" {
     type  = list(string)
   }
 
+  variable "backup_segment_display_name" {
+    type  = string
+    default = ""
+  }
+
+  variable "backup_vlan_ids" {
+    type  = list(string)
+    default = []
+  }
+
   variable "overlay_segment_subnet_address" {
     type  = string
   }
@@ -69,6 +91,11 @@ variable "bfd_config_multiple" {
   variable "transport_zone_path" {
     type  =  string
     default = "/infra/sites/default/enforcement-points/default/transport-zones/2ab7b77f-c4d4-483e-9686-09b0ecd99ba3"
+  }
+
+  variable "backup_transport_zone_path" {
+    type  =  string
+    default = "/infra/sites/default/enforcement-points/default/transport-zones/0b85d17b-4160-4083-b548-1d596b62b5ec"
   }
 
   variable "overlay_segment_transport_zone_path" {
@@ -97,6 +124,25 @@ variable "bfd_config_multiple" {
     default = "/infra/sites/default/enforcement-points/default/edge-clusters/28bc1328-1eb3-4078-8ed7-699b4b9c9ab9/edge-nodes/0"
   }
 
+  variable "backup_t0_interface_name" {
+    type  = string
+    default = ""
+  }
+
+  variable "backup_t0_interface_subnet" {
+    type  = list(string)
+    default = []
+  }
+
+  variable "backup_t0_interface_type" {
+    type  = string
+    default = "EXTERNAL"
+  }
+  
+  variable "backup_t0_interface_edge_node_path" {
+    type  = string
+    default = "/infra/sites/default/enforcement-points/default/edge-clusters/28bc1328-1eb3-4078-8ed7-699b4b9c9ab9/edge-nodes/1"
+  }
 ##
 
 ## NSX-T Tier-0 Gateway Variables ##

@@ -43,13 +43,18 @@ module "nsxt" {
 
   bgp_neighbour_name        = var.nsxt_config.bgp.bgp_neighbour_name
   bgp_neighbour_address     = var.nsxt_config.bgp.bgp_neighbour_address
+  backup_bgp_neighbour_name        = var.nsxt_config.bgp.backup_bgp_neighbour_name
+  backup_bgp_neighbour_address     = var.nsxt_config.bgp.backup_bgp_neighbour_address
   remote_as_num             = var.nsxt_config.bgp.remote_as_num
   address_family            = var.nsxt_config.bgp.address_family
 
   segment_display_name      = var.nsxt_config.segment.segment_display_name
-  overlay_segment_name      = var.nsxt_config.segment.overlay_segment_name
   vlan_ids                  = var.nsxt_config.segment.vlan_ids
   transport_zone_path       = var.nsxt_config.segment.transport_zone_path
+  backup_segment_display_name      = var.nsxt_config.segment.backup_segment_display_name
+  backup_vlan_ids                  = var.nsxt_config.segment.backup_segment_vlan_ids
+  backup_transport_zone_path       = var.nsxt_config.segment.backup_segment_transport_zone_path
+  overlay_segment_name      = var.nsxt_config.segment.overlay_segment_name
   overlay_segment_subnet_address = var.nsxt_config.segment.overlay_segment_subnet_address
   overlay_segment_transport_zone_path = var.nsxt_config.segment.overlay_segment_transport_zone_path
 
@@ -57,12 +62,15 @@ module "nsxt" {
   t0_interface_subnet       = [var.nsxt_config.t0_gateway_interface.t0_interface_subnet]
   t0_interface_type         = var.nsxt_config.t0_gateway_interface.interface_type
   t0_interface_edge_node_path = var.nsxt_config.t0_gateway_interface.edge_node_path
+  backup_t0_interface_name         = var.nsxt_config.t0_gateway_interface.backup_t0_interface_name
+  backup_t0_interface_subnet       = [var.nsxt_config.t0_gateway_interface.backup_t0_interface_subnet]
+  backup_t0_interface_type         = var.nsxt_config.t0_gateway_interface.backup_interface_type
+  backup_t0_interface_edge_node_path = var.nsxt_config.t0_gateway_interface.backup_edge_node_path
 
   t0_vrf_gateway_name       = var.nsxt_config.t0_gateway.gateway_name
   t0_vrf_gateway_failover_mode = var.nsxt_config.t0_gateway.failover_mode
   t0_vrf_gateway_path       = var.nsxt_config.t0_gateway.gateway_path
   t0_vrf_gateway_edge_cluster_path = var.nsxt_config.t0_gateway.edge_cluster_path
-
 
   t1_vrf_gateway_name       = var.nsxt_config.t1_gateway.gateway_name
   t1_vrf_gateway_edge_cluster_path = var.nsxt_config.t1_gateway.edge_cluster_path

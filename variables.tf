@@ -49,15 +49,20 @@ variable "nsxt_config" {
     bgp = object({
       bgp_neighbour_name = string
       bgp_neighbour_address = string
+      backup_bgp_neighbour_name = string
+      backup_bgp_neighbour_address = string
       remote_as_num = number
       address_family = string
     })
     segment = object({
       segment_display_name = string
-      overlay_segment_name = string
-      overlay_segment_subnet_address = string
       vlan_ids = list(string)
       transport_zone_path = string
+      backup_segment_display_name = string
+      backup_segment_vlan_ids = list(string)
+      backup_segment_transport_zone_path = string
+      overlay_segment_name = string
+      overlay_segment_subnet_address = string
       overlay_segment_transport_zone_path = string
     })
     t0_gateway_interface = object({
@@ -65,6 +70,10 @@ variable "nsxt_config" {
       t0_interface_subnet = string
       interface_type = string
       edge_node_path = string
+      backup_t0_interface_name = string
+      backup_t0_interface_subnet = string
+      backup_interface_type = string
+      backup_edge_node_path = string
     })
     t0_gateway = object({
       gateway_name = string
