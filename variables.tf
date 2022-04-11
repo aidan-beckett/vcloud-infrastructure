@@ -44,8 +44,8 @@
 
 ##
 
-variable "nsxt_config_array" {
-  type = list(object({
+variable "nsxt_config" {
+  type = object({
     bgp = object({
       bgp_neighbour_name = string
       bgp_neighbour_address = string
@@ -79,13 +79,13 @@ variable "nsxt_config_array" {
       route_advertisement_types = string
       edge_cluster_path = string
     })
-  }))
-  default = []
+  })
+  default = null
 
 }
 
-variable "vcd_config_array" {
-  type = list(object({
+variable "vcd_config" {
+  type = object({
     org = object({
       create_new_org = string
       org_name = string
@@ -114,6 +114,6 @@ variable "vcd_config_array" {
       memory = number
       vm_ip = string
     }))
-  }))
-  default = []
+  })
+  default = null
 }

@@ -37,61 +37,61 @@ provider "nsxt" {
 }
 
 module "nsxt" {
-  for_each = {for nsxt_config in var.nsxt_config_array: nsxt_config.t0_gateway.gateway_name => nsxt_config}
+  count = var.nsxt_config != null ? 1 : 0
 
   source = "./modules/nsxt"
 
-  bgp_neighbour_name        = each.value.bgp.bgp_neighbour_name
-  bgp_neighbour_address     = each.value.bgp.bgp_neighbour_address
-  remote_as_num             = each.value.bgp.remote_as_num
-  address_family            = each.value.bgp.address_family
+  bgp_neighbour_name        = var.nsxt_config.bgp.bgp_neighbour_name
+  bgp_neighbour_address     = var.nsxt_config.bgp.bgp_neighbour_address
+  remote_as_num             = var.nsxt_config.bgp.remote_as_num
+  address_family            = var.nsxt_config.bgp.address_family
 
-  segment_display_name      = each.value.segment.segment_display_name
-  overlay_segment_name      = each.value.segment.overlay_segment_name
-  vlan_ids                  = each.value.segment.vlan_ids
-  transport_zone_path       = each.value.segment.transport_zone_path
-  overlay_segment_subnet_address = each.value.segment.overlay_segment_subnet_address
-  overlay_segment_transport_zone_path = each.value.segment.overlay_segment_transport_zone_path
+  segment_display_name      = var.nsxt_config.segment.segment_display_name
+  overlay_segment_name      = var.nsxt_config.segment.overlay_segment_name
+  vlan_ids                  = var.nsxt_config.segment.vlan_ids
+  transport_zone_path       = var.nsxt_config.segment.transport_zone_path
+  overlay_segment_subnet_address = var.nsxt_config.segment.overlay_segment_subnet_address
+  overlay_segment_transport_zone_path = var.nsxt_config.segment.overlay_segment_transport_zone_path
 
-  t0_interface_name         = each.value.t0_gateway_interface.t0_interface_name
-  t0_interface_subnet       = [each.value.t0_gateway_interface.t0_interface_subnet]
-  t0_interface_type         = each.value.t0_gateway_interface.interface_type
-  t0_interface_edge_node_path = each.value.t0_gateway_interface.edge_node_path
+  t0_interface_name         = var.nsxt_config.t0_gateway_interface.t0_interface_name
+  t0_interface_subnet       = [var.nsxt_config.t0_gateway_interface.t0_interface_subnet]
+  t0_interface_type         = var.nsxt_config.t0_gateway_interface.interface_type
+  t0_interface_edge_node_path = var.nsxt_config.t0_gateway_interface.edge_node_path
 
-  t0_vrf_gateway_name       = each.value.t0_gateway.gateway_name
-  t0_vrf_gateway_failover_mode = each.value.t0_gateway.failover_mode
-  t0_vrf_gateway_path       = each.value.t0_gateway.gateway_path
-  t0_vrf_gateway_edge_cluster_path = each.value.t0_gateway.edge_cluster_path
+  t0_vrf_gateway_name       = var.nsxt_config.t0_gateway.gateway_name
+  t0_vrf_gateway_failover_mode = var.nsxt_config.t0_gateway.failover_mode
+  t0_vrf_gateway_path       = var.nsxt_config.t0_gateway.gateway_path
+  t0_vrf_gateway_edge_cluster_path = var.nsxt_config.t0_gateway.edge_cluster_path
 
 
-  t1_vrf_gateway_name       = each.value.t1_gateway.gateway_name
-  t1_vrf_gateway_edge_cluster_path = each.value.t1_gateway.edge_cluster_path
-  t1_vrf_gateway_failover_mode = each.value.t1_gateway.failover_mode
-  t1_vrf_gateway_pool_allocation = each.value.t1_gateway.pool_allocation
-  t1_vrf_gateway_route_advertisement_types = [each.value.t1_gateway.route_advertisement_types]
+  t1_vrf_gateway_name       = var.nsxt_config.t1_gateway.gateway_name
+  t1_vrf_gateway_edge_cluster_path = var.nsxt_config.t1_gateway.edge_cluster_path
+  t1_vrf_gateway_failover_mode = var.nsxt_config.t1_gateway.failover_mode
+  t1_vrf_gateway_pool_allocation = var.nsxt_config.t1_gateway.pool_allocation
+  t1_vrf_gateway_route_advertisement_types = [var.nsxt_config.t1_gateway.route_advertisement_types]
 }
 
 module "vdc" {
-  for_each = { for vcd_config in var.vcd_config_array: vcd_config.org.org_name => vcd_config }
+  count = var.vcd_config != null ? 1 : 0
   source = "./modules/vclouddirector"
 
-  create_new_org            = each.value.org.create_new_org
-  org_name                  = each.value.org.org_name
-  org_full_name             = each.value.org.org_full_name
+  create_new_org            = var.vcd_config.org.create_new_org
+  org_name                  = var.vcd_config.org.org_name
+  org_full_name             = var.vcd_config.org.org_full_name
 
-  vdc_name                  = each.value.customer_vdc.vdc_name
-  provider_vdc_name         = each.value.customer_vdc.provider_vdc_name
-  provider_network_pool     = each.value.customer_vdc.provider_network_pool
-  cpu_allocation            = each.value.customer_vdc.cpu_allocation
-  ram_allocation            = each.value.customer_vdc.ram_allocation
+  vdc_name                  = var.vcd_config.customer_vdc.vdc_name
+  provider_vdc_name         = var.vcd_config.customer_vdc.provider_vdc_name
+  provider_network_pool     = var.vcd_config.customer_vdc.provider_network_pool
+  cpu_allocation            = var.vcd_config.customer_vdc.cpu_allocation
+  ram_allocation            = var.vcd_config.customer_vdc.ram_allocation
 
-  network_name              = each.value.network.network_name
-  overlay_segment_name      = each.value.network.overlay_segment_name
-  overlay_segment_subnet_address = each.value.network.overlay_segment_subnet_address
-  start_address             = each.value.network.start_address
-  end_address               = each.value.network.end_address
-  primary_dns_ip            = each.value.network.primary_dns_ip
-  secondary_dns_ip          = each.value.network.secondary_dns_ip
+  network_name              = var.vcd_config.network.network_name
+  overlay_segment_name      = var.vcd_config.network.overlay_segment_name
+  overlay_segment_subnet_address = var.vcd_config.network.overlay_segment_subnet_address
+  start_address             = var.vcd_config.network.start_address
+  end_address               = var.vcd_config.network.end_address
+  primary_dns_ip            = var.vcd_config.network.primary_dns_ip
+  secondary_dns_ip          = var.vcd_config.network.secondary_dns_ip
 
-  vms_config                = each.value.vms_config
+  vms_config                = var.vcd_config.vms_config
 }
