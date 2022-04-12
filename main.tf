@@ -64,7 +64,6 @@ module "nsxt" {
   t0_interface_edge_node_path = var.nsxt_config.t0_gateway_interface.edge_node_path
   backup_t0_interface_name         = var.nsxt_config.t0_gateway_interface.backup_t0_interface_name
   backup_t0_interface_subnet       = [var.nsxt_config.t0_gateway_interface.backup_t0_interface_subnet]
-  backup_t0_interface_type         = var.nsxt_config.t0_gateway_interface.backup_interface_type
   backup_t0_interface_edge_node_path = var.nsxt_config.t0_gateway_interface.backup_edge_node_path
 
   t0_vrf_gateway_name       = var.nsxt_config.t0_gateway.gateway_name

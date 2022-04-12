@@ -133,11 +133,6 @@ variable "bfd_config_multiple" {
     type  = list(string)
     default = []
   }
-
-  variable "backup_t0_interface_type" {
-    type  = string
-    default = "EXTERNAL"
-  }
   
   variable "backup_t0_interface_edge_node_path" {
     type  = string

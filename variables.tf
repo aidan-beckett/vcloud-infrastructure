@@ -72,7 +72,6 @@ variable "nsxt_config" {
       edge_node_path = string
       backup_t0_interface_name = string
       backup_t0_interface_subnet = string
-      backup_interface_type = string
       backup_edge_node_path = string
     })
     t0_gateway = object({

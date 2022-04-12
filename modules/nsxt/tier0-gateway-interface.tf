@@ -15,7 +15,7 @@ resource "nsxt_policy_tier0_gateway_interface" "primary_t0_int" {
 resource "nsxt_policy_tier0_gateway_interface" "backup_t0_int" {
   count          = var.backup_t0_interface_name != "" ? 1 : 0
   display_name   = var.backup_t0_interface_name
-  type           = var.backup_t0_interface_type
+  type           = var.t0_interface_type
   edge_node_path = var.backup_t0_interface_edge_node_path
   gateway_path   = nsxt_policy_tier0_gateway.tier0_gw.path
   segment_path   = nsxt_policy_vlan_segment.backup_vlan_seg[0].path 
